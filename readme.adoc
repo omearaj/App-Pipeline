@@ -7,10 +7,20 @@ We will explore the following use cases, which are very common when releasing so
 
 . Continuous Delivery of a software release to a Platform, specifically Cloud Foundry.
 . Software promotion through different environments, dev, test/QA and production
-. link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Platform services.
+. link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Cloud Foundry.
 . Hybrid Cloud deployments
 
-== What is this?
+== Getting Started
+
+This repo contains the instructions for creating your own Jwnkins Jobs to perform the use cases outlined above. 
+It also contains a script called link:scripts/delivery.sh[delivery] and link:scripts/promotion.sh[promotion] which 
+can be used independently of Jenkins to create your own scripts to cut-n-paste into Jenkins. These scripts test the 
+different CF CLI commands outside of Jenkins to make testing easier.
+
+We'll be using the link:https://github.com/omearaj/PCF-demo[PCF Map] application to demostrate our  
+
+promotion.sh USER PASSWORD ORG SPACE https://api.run.pivotal.io cfapps.io 92
+
 
 image:./images/PCF_Map_View.png[Custom Jenkins View]
 image:./images/Jenkins_CF_CLI_Plugin.png[Custom Jenkins View]
