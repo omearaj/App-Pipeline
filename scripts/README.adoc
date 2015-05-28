@@ -1,7 +1,7 @@
 = CF CLI 
 
 These scripts make it easy to test CF CLI commands outside of Jenkins. Users can cut-n-paste the bash shell commands
-in the Jenkins Jobs.
+in the Jenkins Jobs when testing is complete.
 
 The required input parameters are:
 
