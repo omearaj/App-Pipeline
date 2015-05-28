@@ -25,13 +25,8 @@ to demonstrate Cloud Foundry features. The application demonstrates the followin
 . Application Health Management, the Kill button will exist the application and cause Cloud Foundry to create a new instance.
 . FINISH FEATURES
 
-link:continousdelivery.adoc[Continous Delivery] +
+link:delivery.adoc[Continous Delivery] +
 link:promotion.adoc[Software Promotion] +
-
-
-consumes a Cloud Foudnry service, Rabbit
-and has a kill button to 
-
 
 
 
