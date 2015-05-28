@@ -1,4 +1,13 @@
-= Integrated Pipelines for Hybrid Clouds using CloudBees Jenkins and Pivotal Cloud Foundry
+= Integrated Pipelines for Hybrid Clouds
+
+This document provides details on how to build integrated pipelines for Hybrid clouds using Cloudbee's Jenkins, Artifactory
+and Pivotal Cloud Foundry with and emphasis on software delivery. 
+
+We will explore the following use cases, which are very common when releasing software, 
+
+. Continuous Delivery of a software release to a Platform, specifically Cloud Foundry.
+. Software promotion through different environments, dev, test/QA and production
+. link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Platform services.
 
 == What is this?
 
