@@ -1,0 +1,14 @@
+= CF CLI 
+
+These scripts make it easy to test CF CLI commands outside of Jenkins. Users can cut-n-paste the bash shell commands
+in the Jenkins Jobs when testing is complete.
+
+The required input parameters are:
+
+. CF User name, ex john@test.com
+. CF password
+. CF Org
+. CF Space
+. CF api, ex https://api.run.pivotal.io
+. Domain name, ex cfapps.io
+. Build Number, provided as part of Jenkins Job.

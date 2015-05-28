@@ -1,0 +1,39 @@
+= Integrated Pipelines for Hybrid Clouds
+
+This document provides details on how to build integrated pipelines for Hybrid clouds using Cloudbee's Jenkins, Artifactory
+and Pivotal Cloud Foundry with and emphasis on software delivery. 
+
+We will explore the following use cases, which are very common when releasing software, 
+
+. Continuous Delivery of a software release to a Platform, specifically Cloud Foundry.
+. Software promotion through different environments, dev, test/QA and production
+. link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Cloud Foundry.
+. Hybrid Cloud deployments
+
+== Getting Started
+
+This repo contains the instructions for creating your own Jenkins Jobs to perform the use cases outlined above. 
+It also contains a script called link:scripts/delivery.sh[delivery] and link:scripts/promotion.sh[promotion] which 
+can be used independently of Jenkins to create your own scripts to cut-n-paste into Jenkins. These scripts test the 
+different CF CLI commands outside of Jenkins to make testing easier.
+
+Our example application is link:https://github.com/omearaj/PCF-demo[PCF Map] which is a Spring application designed
+to demonstrate Cloud Foundry features. The application demonstrates the following Cloud Foundry features,
+
+. Binding to a Cloud Foundry managed service, Rabbit in this case.
+. Spring Auto-Reconfiguration, inject service credentials during deployment, etc.
+. Application Health Management, the Kill button will exist the application and cause Cloud Foundry to create a new instance.
+. FINISH FEATURES
+
+link:delivery.adoc[Continous Delivery] +
+link:promotion.adoc[Software Promotion] +
+
+
+
+image:./images/PCF_Map_View.png[Custom Jenkins View]
+image:./images/Jenkins_CF_CLI_Plugin.png[Custom Jenkins View]
+image:./images/PCF_Map_Artifactory_Store.png[Custom Jenkins View]
+image:./images/PCF_Map_Artifactory_Retrieve.png[Custom Jenkins View]
+image:./images/PCF_Map_Poll.png[Custom Jenkins View]
+image:./images/PCF_Map_Post_Build_Scripts.png[Custom Jenkins View]
+image:./images/PCF_Map_SCM.png[Custom Jenkins View]
