@@ -8,6 +8,7 @@ We will explore the following use cases, which are very common when releasing so
 . Continuous Delivery of a software release to a Platform, specifically Cloud Foundry.
 . Software promotion through different environments, dev, test/QA and production
 . link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Platform services.
+. Hybrid Cloud deployments
 
 == What is this?
 
