@@ -2,4 +2,4 @@
 
 == What is this?
 
-image:./images/PCF_Map_View.png[Transit App Architecture]
+image:./images/PCF_Map_View.png[Custom Jenkins View]
