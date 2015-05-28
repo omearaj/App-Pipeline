@@ -5,5 +5,8 @@ In this examples we will create a continuous delvery pipleine using CloudBee's J
 == Create Jenkins Job
 
 . Create a new Jenkins Job
-image:../image/Jenkins_New_Job.png
+image:./image/Jenkins_New_Job.png
+.
+
+image:./image/Jenkins_New_Job.png
 
