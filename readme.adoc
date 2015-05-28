@@ -1,3 +1,5 @@
-== Integrated Pipelines for Hybrid Clouds using CloudBees Jenkins and Pivotal Cloud Foundry
+= 
+Integrated Pipelines for Hybrid Clouds using CloudBees Jenkins and Pivotal Cloud Foundry
 
-=== What is this?
+==
+ What is this?
