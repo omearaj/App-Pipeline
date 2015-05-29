@@ -94,12 +94,12 @@ In our example we complete the following steps,
 
 . If an app is found by querying the list of deployed apps then unmap a convenient url, ex map-dev.cfapps.io, and delete the existing app. In this situation we are ok with downtime as we deploy the new app in development.
 
-NOTE: route name must be unique in a foundation. If you use Pivotal Web Services you need to make sure your convenient URL is unique.
-
 . Push the next released version, bind an existing Rabbit service to the app, map the convenient URL to the new 
 instance and start the app.
 
 . Log out
+
+NOTE: route name must be unique in a foundation. If you use Pivotal Web Services you need to make sure your convenient URL is unique.
 
 [source,bash]
 ----
