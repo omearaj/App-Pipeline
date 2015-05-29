@@ -8,11 +8,11 @@ Choose New Item and select FreeStyle project. Include a name for the project.
 
 image:./images/Jenkins_New_Job.png[Jenkins Job]
 
-=== 2. Configure Source Code Managemnet 
+=== 2. Configure Source Code Management 
 
 Choose Git and provide a public repo URL 
 
-NOTE: private works assuming credentials are configured
+NOTE: private repos work assuming credentials are configured
 
 image:./images/PCF_Map_SCM.png[Source Code Management]
 
@@ -21,3 +21,10 @@ image:./images/PCF_Map_SCM.png[Source Code Management]
 In this example we'll to poll the repo for changes very frequently to watch the pipeline run.
 
 image:./images/PCF_Map_Poll.png[Poll SCM]
+
+=== 4. Build Environment
+
+Set the build environment to use Generic-Artifactory integration. We'll use Artifactory as the true for our deployment artifacts
+
+image:./images/PCF_Map_Artifactory_Store.png[Poll SCM]
+
