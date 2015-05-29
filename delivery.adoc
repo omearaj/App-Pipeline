@@ -2,13 +2,18 @@
 
 In this examples we will create a continuous deployment pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry
 
-== Create Jenkins Job
+== 1. Create Jenkins Job
 
-. Create a new Jenkins Job. Choose FreeStyle project and provide a name.
+Create a new Jenkins Job. Choose FreeStyle project and provide a name.
+
 image:./images/Jenkins_New_Job.png[Jenkins Job]
-. In the Source Code Managemnet section choose Git and provide the URL to a public repo 
+
+In the Source Code Managemnet section choose Git and provide the URL to a public repo 
 
 [NOTE] private works assuming credentials are configured
+
 image:./images/PCF_Map_SCM.png[Source Code Management]
-. Set build trigger
+
+Set build trigger
+
 image:./images/PCF_Map_Poll.png[Poll SCM]
