@@ -70,8 +70,9 @@ image:./images/PCF_Map_Artifactory_Retrieve.png[Retrieve Jenkins Artifacts]
 
 === 8. Configure Cloud Foundry Plugin
 
-CloudBees's Jenkins provides a nice Cloud Foundry plugin that can be used to integrate with Cloud Foundry. CloudBee's Jenkins
+CloudBees's Jenkins provides a convenient Cloud Foundry plugin that can be used to integrate with Cloud Foundry. CloudBee's Jenkins
 will manage the CLI version for you based on setting in the Jenkins configuration. To configure the plugin provide the following,
+
 . Cloud Foundry API endpoint
 . Credentials 
 . Skip SSL Validation (This is based on SSL certifications in your Cloud Foundry Deployment).
