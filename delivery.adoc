@@ -88,6 +88,19 @@ to a development environment and are not concerned about performing a blue/green
 from development to other environments we will perform a Blue/Green deployment ensuring continued service during our
 upgrade.
 
+In our example we complete the following steps,
+
+. Determine the name of the deployed app. The naming convention for this app is map-build-BUILD_NUMBER, ex map-build-45. We assume only 1 previous build exist but this script can be modified to support multiple previous builds.
+
+. If an app is found by querying the list of deployed apps then unmap a convenient url, ex map-dev.cfapps.io, and delete the existing app. In this situation we are ok with downtime as we deploy the new app in development.
+
+note: route name must be unique in a foundation. If you use Pivotal Web Services you need to make sure your convenient URL is unique.
+
+. Push the next released version, bind an existing Rabbit service to the app, map the convenient URL to the new 
+instance and start the app.
+
+. Log out
+
 [source,bash]
 ----
 APP_NAME=map-build-$BUILD_VERSION
