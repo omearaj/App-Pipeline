@@ -118,4 +118,4 @@ cf start $APP_NAME
 cf lo
 ----
 
-link:./scripts/delivery.sh[An example of a delviery script to validate and test your CF CLI commands]
+link:./scripts/deployment.sh[An example of a deployment script to validate and test your CF CLI commands]
