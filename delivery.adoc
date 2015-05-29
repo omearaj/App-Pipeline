@@ -10,3 +10,5 @@ image:./images/Jenkins_New_Job.png[Jenkins Job]
 
 [NOTE] private works assuming credentials are configured
 image:./images/PCF_Map_SCM.png[Source Code Management]
+. Set build trigger
+image:./images/PCF_Map_Poll.png[Poll SCM]
