@@ -1,6 +1,6 @@
 = Continuous Deployment
 
-In this examples we will create a continuous deployment pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry
+In this example we will create a continuous deployment pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry
 
 == 1. Create Jenkins Job
 
