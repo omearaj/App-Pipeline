@@ -42,19 +42,23 @@ image:./images/PCF_Map_Post_Build_Scripts.png[Parameterized Builds]
 
 === 6. Create a deployment job
 
-The first Jenkin's job build and stored the deployment aritfact in Artifactory. This job leverages the CloudBee's CF CLI
+The first Jenkin's job built and stored the deployment aritfact in Artifactory. This job leverages the CloudBee's CF CLI
 to deploy our application into Pivotal Cloud Foundry. The job accepts a couple of parameters
 . The Build Number from the previous upstream job.
 . The domain name of the Cloud Foundry App Foundation.
 
 The build number is used in the application name and route name when the application is pushed. This provides a quick way
 to determine which build you are working with in the environment. You can use other identifiers from the build system like
-hash commits.
+hash commits for your design.
 
-The doamin name is provided to make route maintenance in Cloud Foundry. When the application is pushed it is given a unique 
-route in Cloud Foundry. This route is the mechanism for accessing the application, its the URL, and in this example it follows
-a naming convention of "map-build-XX".piv-demo.com.
+The domain name is provided to perform route maintenance in Cloud Foundry. When the application is pushed it is given a unique 
+route in Cloud Foundry. This route is the mechanism for accessing the application, its the URL. In our example it follows
+a naming convention of "map-build-XX.cedemo.fe.pivotal.io"
 
-As a convenience, we also map the route map-dev.piv-demo.com to the latest deployed artifact making it easy to access in
-different environments. Routes in Cloud Foudnry are very powerful and make the platfrom very easy to change.
-application 
+As a convenience, we also map a second route during deployment to the latest deployed artifact. The route in our example,
+"map-dev.cedemo.fe.pivotal.io" makes it easy to always access the latest build in the development environment. Routes in 
+Cloud Foudnry are very powerful and make the platfrom very easy to change.
+
+In 
+
+image:./images/PCF_Map_Private_Delivery_Parameters.png[Parameters]
