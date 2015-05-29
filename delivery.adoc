@@ -1,9 +1,13 @@
-= Continuous Delivery
+= Continuous Deployment
 
-In this examples we will create a continuous delvery pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry
+In this examples we will create a continuous deployment pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry
 
 == Create Jenkins Job
 
 . Create a new Jenkins Job. Choose FreeStyle project and provide a name.
 
 image:./images/Jenkins_New_Job.png[Jenkins Job]
+
+. In the Source Code Managemnet section choose Git
+
+image:../images/PCF_Map_SCM.png[Source Code Management]
