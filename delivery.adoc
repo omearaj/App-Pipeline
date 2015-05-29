@@ -117,3 +117,5 @@ cf map-route $APP_NAME $DOMAIN -n map-dev
 cf start $APP_NAME
 cf lo
 ----
+
+link:./scripts/delivery.sh[Delviery Script]
