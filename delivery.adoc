@@ -59,6 +59,11 @@ As a convenience, we also map a second route during deployment to the latest dep
 "map-dev.cedemo.fe.pivotal.io" makes it easy to always access the latest build in the development environment. Routes in 
 Cloud Foudnry are very powerful and make the platfrom very easy to change.
 
-In 
-
 image:./images/PCF_Map_Private_Delivery_Parameters.png[Parameters]
+
+=== 7. Retrieve deployment Artifacts
+
+Using the Artifactory integration we retrieve the deployment artifact for the requested build and store it in the workspace
+of Jenkins.
+
+image:./images/PCF_Map_Artifactory_Retrieve.png[Retrieve Jenkins Artifacts]
