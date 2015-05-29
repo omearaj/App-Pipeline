@@ -5,9 +5,7 @@ In this examples we will create a continuous deployment pipleine using CloudBee'
 == Create Jenkins Job
 
 . Create a new Jenkins Job. Choose FreeStyle project and provide a name.
-
 image:./images/Jenkins_New_Job.png[Jenkins Job]
-
-. In the Source Code Managemnet section choose Git and provide the URL to a public repo (private works assuming credentials are configured)
-
+. In the Source Code Managemnet section choose Git and provide the URL to a public repo 
+NOTE private works assuming credentials are configured
 image:./images/PCF_Map_SCM.png[Source Code Management]
