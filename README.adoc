@@ -13,7 +13,7 @@ We will explore the following use cases, which are very common when releasing so
 == Getting Started
 
 This repo contains the instructions for creating your own Jenkins Jobs to perform the use cases outlined above. 
-It also contains a script called link:scripts/delivery.sh[delivery] and link:scripts/promotion.sh[promotion] which 
+It also contains a script called link:scripts/delivery.sh[deployment] and link:scripts/promotion.sh[promotion] which 
 can be used independently of Jenkins to create your own scripts to cut-n-paste into Jenkins. These scripts test the 
 different CF CLI commands outside of Jenkins to make testing easier.
 
