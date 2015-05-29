@@ -16,7 +16,7 @@ NOTE: private repos work assuming credentials are configured
 
 image:./images/PCF_Map_SCM.png[Source Code Management]
 
-=== 3. Set build trigger
+=== 3. Set Build Trigger
 
 In this example we'll to poll the repo for changes very frequently to watch the pipeline run.
 
@@ -29,7 +29,7 @@ artifacts. We also control the number of artifacts we keep by discarding old bui
 
 image:./images/PCF_Map_Artifactory_Store.png[Build Environment]
 
-=== 5. Trigger parameterized deployment
+=== 5. Trigger Parameterized Deployment
 
 Upon completiong the deployment artifact and storing it in Artifactory, we will call a downstream Jenkins job to deploy 
 our application into our development environment in Pivotal Cloud Foundry. In this example we will call separate jobs 
@@ -40,7 +40,7 @@ can also use other deployment variables based on your design.
 
 image:./images/PCF_Map_Post_Build_Scripts.png[Parameterized Builds]
 
-=== 6. Create a deployment job
+=== 6. Create a Deployment Job
 
 The first Jenkin's job built and stored the deployment aritfact in Artifactory. This job leverages the CloudBee's CF CLI
 to deploy our application into Pivotal Cloud Foundry. The job accepts a couple of parameters
@@ -61,7 +61,7 @@ Cloud Foudnry are very powerful and make the platfrom very easy to change.
 
 image:./images/PCF_Map_Private_Delivery_Parameters.png[Parameters]
 
-=== 7. Retrieve deployment Artifacts
+=== 7. Retrieve Deployment Artifacts
 
 Using the Artifactory integration we retrieve the deployment artifact for the requested build and store it in the workspace
 of Jenkins.
