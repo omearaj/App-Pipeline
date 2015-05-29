@@ -31,6 +31,11 @@ image:./images/PCF_Map_Artifactory_Store.png[Build Environment]
 
 === 5. Trigger parameterized deployment
 
-Upon completiong the deployment artifact and storing it in Artifactory, we will call a downstream Jenkins job to deploy our application into our development environment in Pivotla Cloud Foundry
+Upon completiong the deployment artifact and storing it in Artifactory, we will call a downstream Jenkins job to deploy 
+our application into our development environment in Pivotal Cloud Foundry. In this example we will call separate jobs 
+to deploy into a on-premise and off-premise Cloud Foundry. 
+
+We also pass and required parameters for downstream jobs, in this case the build number for the deployment artifact. You
+can also use other deployment variables based on your design.
 
 image:./images/PCF_Map_Post_Build_Scripts.png[Parameterized Builds]
