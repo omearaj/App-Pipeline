@@ -25,7 +25,7 @@ to demonstrate Cloud Foundry features. The application demonstrates the followin
 . Application Health Management, the Kill button will exist the application and cause Cloud Foundry to create a new instance.
 . FINISH FEATURES
 
-link:delivery.adoc[Continous Deployment] +
+link:deployment.adoc[Continous Deployment] +
 link:promotion.adoc[Software Promotion] +
 
 image:./images/PCF_Map_View.png[Custom Jenkins View]
