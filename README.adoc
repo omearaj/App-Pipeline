@@ -28,12 +28,4 @@ to demonstrate Cloud Foundry features. The application demonstrates the followin
 link:delivery.adoc[Continous Delivery] +
 link:promotion.adoc[Software Promotion] +
 
-
-
 image:./images/PCF_Map_View.png[Custom Jenkins View]
-image:./images/Jenkins_CF_CLI_Plugin.png[Custom Jenkins View]
-image:./images/PCF_Map_Artifactory_Store.png[Custom Jenkins View]
-image:./images/PCF_Map_Artifactory_Retrieve.png[Custom Jenkins View]
-image:./images/PCF_Map_Poll.png[Custom Jenkins View]
-image:./images/PCF_Map_Post_Build_Scripts.png[Custom Jenkins View]
-image:./images/PCF_Map_SCM.png[Custom Jenkins View]
