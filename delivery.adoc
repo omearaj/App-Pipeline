@@ -83,8 +83,13 @@ image:./images/Jenkins_CF_CLI_Plugin.png[Cloud Foundry Plugin]
 
 === 9. Script of CF CLI Commands
 
-The last step
+Create a script to perform the required CF CLI commands to deploy your application. In our example we are deploying
+to a development environment and are not concerned about performing a blue/green deployment. When we promote our code
+from development to other environments we will perform a Blue/Green deployment ensuring continued service during our
+upgrade.
 
+[source,bash]
+----
 APP_NAME=map-build-$BUILD_VERSION
 HOST_NAME=$APP_NAME-dev
 # assuming only 1 previous build.
@@ -98,3 +103,4 @@ cf bind-service $APP_NAME myRabbit
 cf map-route $APP_NAME $DOMAIN -n map-dev
 cf start $APP_NAME
 cf lo
+----
