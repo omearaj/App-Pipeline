@@ -27,5 +27,10 @@ image:./images/PCF_Map_Poll.png[Poll SCM]
 Set the build environment to use Generic-Artifactory integration. We'll use Artifactory as the true for our deployment 
 artifacts. We also control the number of artifacts we keep by discarding old builds.
 
-image:./images/PCF_Map_Artifactory_Store.png[Poll SCM]
+image:./images/PCF_Map_Artifactory_Store.png[Build Environment]
 
+=== 5. Trigger parameterized deployment
+
+Upon completiong the deployment artifact and storing it in Artifactory, we will call a downstream Jenkins job to deploy our application into our development environment in Pivotla Cloud Foundry
+
+image:./images/PCF_Map_Post_Build_Scripts.png[Parameterized Builds]
