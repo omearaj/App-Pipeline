@@ -10,4 +10,4 @@ image:./images/Jenkins_New_Job.png[Jenkins Job]
 
 . In the Source Code Managemnet section choose Git
 
-image:../images/PCF_Map_SCM.png[Source Code Management]
+image:./images/PCF_Map_SCM.png[Source Code Management]
