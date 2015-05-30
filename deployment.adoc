@@ -4,7 +4,7 @@ In this example we will create a continuous deployment pipleine using CloudBee's
 
 The first job watches for commits to a git repo, builds the project from the repo using its build and dependency management tools, stores the artifacts in Artifactory and calls a downstream job(s). +
 
-The second job retrieves the artifacts from Artifactory, connects to Cloud Foundry and executes a script to deploy the artifacts. Below are the steps tp create these jobs.
+The second job retrieves the artifacts from Artifactory, connects to Cloud Foundry and executes a script to deploy the artifacts. Below are the steps to create these jobs.
 
 === 1. Create Jenkins Job
 
