@@ -1,9 +1,7 @@
 #! /bin/bash
 
-## This script is used to test the BASH script components
+## This script is used to test the BASH script commands
 ## of a Jenkins Job using the Cloud Foundry CLI.
-## This portion of the script is usually a
-## downstream job for continuous delivery.
 
 ## Parameters used to test the BASH script
 ## They will be provided by Jenkins plugins,
@@ -23,6 +21,8 @@ HOST_NAME=$APP_NAME-$CF_SPACE
 
 ## Login to Cloud Foundry usually performed by Jenkins Plugin
 cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-validation
+
+# ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ## These steps complete the following, they are the only required steps for the Jenkins Job
 ##

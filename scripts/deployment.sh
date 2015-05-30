@@ -1,9 +1,7 @@
 #! /bin/bash
 
-## This script is used by a Jenkins job to deliver
-## the artifacts produced by the job into 
-## Cloud Foundry. This portion of the script is usually a
-## downstream job for continuous delivery.
+## This script is used to test the BASH script commands
+## of a Jenkins Job using the Cloud Foundry CLI.
 
 ## Parameters used to test the BASH script
 ## They will be provided by Jenkins plugins, 
@@ -22,6 +20,8 @@ HOST_NAME=$APP_NAME-dev
 
 ## Log into PCF endpoint - Provided via Jenkins Plugin
 cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-validation
+
+# ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ## These steps complete the following, they are the only required steps for the Jenkins Job
 ##
