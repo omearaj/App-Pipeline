@@ -18,10 +18,12 @@ different CF CLI commands outside of Jenkins to make testing easier.
 Our example application is link:https://github.com/omearaj/PCF-demo[PCF Map] which is a Spring application designed
 to demonstrate Cloud Foundry features. The application demonstrates the following Cloud Foundry features,
 
+. Simple CF CLI commands to delivery an application into Cloud Foundry
 . Binding to a Cloud Foundry managed service, Rabbit in this case.
-. Spring Auto-Reconfiguration, inject service credentials during deployment, etc.
-. Application Health Management, the Kill button will exist the application and cause Cloud Foundry to create a new instance.
-. FINISH FEATURES
+. Spring Auto-Reconfiguration, inject service credentials during deployment, environment variables, etc.
+. Application Health Management, the Kill button will exit the application and cause Cloud Foundry to create a new instance.
+
+Let's review the steps required to implement these use cases.
 
 link:deployment.adoc[Continous Deployment] +
 link:promotion.adoc[Software Promotion] +
