@@ -27,3 +27,15 @@ image:./images/Artifactory_Libs.png[Artifactory Library Before]
 Artifactory libraries after promotion. Notice a new copy under the "ext-release-local"
 
 image:./images/Artifactory_Promo_Complete.png[Artifactory Library After]
+
+=== 4. Execute Blue/Green Deployment
+
+Select the "PCF Map Promotion Public" Jenkins job to execute a Blue/Green deployment to the desired environment.
+
+image:./images/PCF_Map_View.png[PCF Map View]
+
+Select the desired space, CF_SPACE
+
+image:./images/PCF_Map_Promo_Public.png[PCF Map View]
+
+
