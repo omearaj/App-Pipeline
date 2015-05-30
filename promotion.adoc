@@ -4,6 +4,17 @@ In this example we use the results from the continuous deployment pipeline to pr
 
 === 1. Promote Software Release
 
+Select the build Jenkins job, select the build version to promote and click on the "Artifactory Release Promotion" link 
 
+image:./images/PCF_Map_Promo.png[Promote Software]
 
+=== 2. Promote Process
+
+Select the target status and the target promotion library. You can also select to move a copy or the original.
+
+image:./images/PCF_Map_Promo_Step1.png[Promote Software]
+
+Status of the promotion will be reported on the screen.
+
+image:./images/PCF_Map_Promo_Complete.png[Promote Software]
 
