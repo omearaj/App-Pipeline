@@ -1,6 +1,6 @@
 == Continuous Deployment
 
-In this example we will create a continuous deployment pipleine using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry. This pipeline consist of 2 Jenkins jobs. +
+In this example we will create a continuous deployment pipeline using CloudBee's Jenkins, Artifactory and Pivotal Cloud Foundry. This pipeline consist of 2 Jenkins jobs. +
 
 The first job watches for commits to a git repo, builds the project from the repo using its build and dependency management tools, stores the artifacts in Artifactory and calls a downstream job(s). +
 
