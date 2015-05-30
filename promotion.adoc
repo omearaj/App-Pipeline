@@ -18,3 +18,12 @@ Status of the promotion will be reported on the screen.
 
 image:./images/PCF_Map_Promo_Complete.png[Promote Software]
 
+=== 3. Verify promotion status is Artifactory
+
+Artifactory libraries before promotion.
+
+image:./images/Artifactory_Libs.png[Artifactory Library Before]
+
+Artifactory libraries after promotion. Notice a new copy under the "ext-release-local"
+
+image:./images/Artifactory_Promo_Complete.png[Artifactory Library After]
