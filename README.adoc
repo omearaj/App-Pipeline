@@ -3,12 +3,10 @@
 This document provides details on how to build integrated pipelines for Hybrid clouds using Cloudbee's Jenkins, Artifactory
 and Pivotal Cloud Foundry with and emphasis on software delivery. 
 
-We will explore the following use cases, which are very common when releasing software, 
+We will explore two use cases which are very common when releasing software, 
 
-. Continuous Delivery of a software release to a Platform, specifically Cloud Foundry.
-. Software promotion through different environments, dev, test/QA and production
-. link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments using Cloud Foundry.
-. Hybrid Cloud deployments
+. Continuous Deployment of a software release to different locations using Cloud Foundry.
+. Software promotion using link:http://martinfowler.com/bliki/BlueGreenDeployment.html[Blue/Green] deployments with Cloud Foundry.
 
 == Getting Started
 
@@ -27,5 +25,3 @@ to demonstrate Cloud Foundry features. The application demonstrates the followin
 
 link:deployment.adoc[Continous Deployment] +
 link:promotion.adoc[Software Promotion] +
-
-image:./images/PCF_Map_View.png[Custom Jenkins View]
