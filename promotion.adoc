@@ -38,7 +38,7 @@ Select the desired space, CF_SPACE
 
 image:./images/PCF_Map_Promo_Public.png[PCF Map View]
 
-[source:bash]
+[source,bash]
 ----
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
