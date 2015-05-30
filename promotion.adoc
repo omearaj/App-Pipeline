@@ -1,6 +1,6 @@
 == Software Promotion
 
-In this example we use the results from the continuous deployment pipeline to promote our software release to additional environments like test or production. In our design we encourage human interaction to complete the software promotion. We also use a Blue/Green deployment strategy to promote our software to other environments.
+In this example we use the results from the continuous deployment pipeline to promote our software release to additional environments like test or production. In our design we encourage human interaction to complete the software promotion. We also use a Blue/Green deployment strategy to promote our software to validate testing and support rollback.
 
 === 1. Promote Software Release
 
