@@ -38,6 +38,11 @@ Select the desired space, CF_SPACE
 
 image:./images/PCF_Map_Promo_Public.png[PCF Map View]
 
+The next release of the applicaiton has been deployed and the external route mapped to the new release. Existing request are not being services by the new application.
+
+Below is the bash script that performs the deployment and changes to existing routes. We deleted the existing
+application but a best practice is to keep the existing deployment available for easy rollback.
+
 [source,bash]
 ----
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
