@@ -1,25 +1,86 @@
 #! /bin/bash
+set -e
 
 ## This script is used to test the BASH script commands
 ## of a Jenkins Job using the Cloud Foundry CLI.
+## This script is based on previous version written by Matt Stine and Jamie O'Meara
+## Author - Sufyaan Kazi - Pivotal
+
+usage ()
+{
+  echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
+  echo '               -d <domain> -a <app_prefix> -v <build_version>'
+  echo '               -sn <serviceName> -m <memory> -p <path_to_app>'
+  echo ' e.g. ./deployment.sh -u suf -p ******** -o suf-org -s dev -d emea.fe.pivotal.io -a cities-ui -v 9 -e citiesService -m 512m -p artifacts/cities-ui.jar'
+  exit
+}
+
+if [ "$#" -eq 0 ]
+then
+  usage
+fi
 
 ## Parameters used to test the BASH script
-## They will be provided by Jenkins plugins, 
+## They will be provided by Jenkins plugins,
 ## Jenkins environment variables or job parameters
-CF_USER=$1
-CF_PASSWORD=$2
-CF_ORG=$3
-CF_SPACE=$4
-API=$5
-DOMAIN=$6
-BUILD_VERSION=$7
+while [ "$1" != "" ]; do
+case $1 in
+        -u )           shift
+                       CF_USER=$1
+                       ;;
+        -pw )          shift
+                       CF_PASSWORD=$1
+                       ;;
+        -o )           shift
+                       CF_ORG=$1
+                       ;;
+        -s )           shift
+                       CF_SPACE=$1
+                       ;;
+        -d )           shift
+                       CF_DOMAIN=$1
+                       ;;
+        -a )           shift
+                       APP_PREFIX=$1
+                       ;;
+        -v )           shift
+                       BUILD_VERSION=$1
+                       ;;
+        -sn )          shift
+                       SERVICE_NAME=$1
+                       ;;
+        -m )           shift
+                       MEMORY=$1
+                       ;;
+        -p )           shift
+                       APP_PATH=$1
+                       ;;
+    esac
+    shift
+done
+
+if [ -z $APP_PATH ]
+then
+  echo "!!!!!! Please supply the path to the app to be deployed !!!!!!!!!!!!!!"
+  exit 1
+fi
+
+echo_msg () {
+  echo ""
+  echo ""
+  echo "************* ${1} *************"
+  echo ""
+
+  return 0
+}
 
 ## Variables used during Jenkins Build Process
-APP_NAME=map-build-$BUILD_VERSION
-HOST_NAME=$APP_NAME-dev
+APP_NAME=$APP_PREFIX-$BUILD_VERSION
+HOST_NAME=$APP_PREFIX-$CF_USER-$BUILD_VERSION
 
 ## Log into PCF endpoint - Provided via Jenkins Plugin
-cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-validation
+echo_msg "Logging into Cloud Foundry"
+cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a https://api.$CF_DOMAIN --skip-ssl-validation
 
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -42,13 +103,21 @@ cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-
 ##   4. Log out
 ##
 
-DEPLOYED_APP_NAME=$(cf apps | grep 'map-build-' | cut -d" " -f1)
+DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | sed '2!d' | cut -d" " -f1)
 if [ -n "$DEPLOYED_APP_NAME" ]; then
- cf unmap-route $DEPLOYED_APP_NAME $DOMAIN -n map-dev
+ echo_msg "Deleting previous microservice version: $DEPLOYED_APP_NAME"
+ cf unmap-route $DEPLOYED_APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
  cf delete $DEPLOYED_APP_NAME -r -f 
 fi
-cf push $APP_NAME -p artifacts/pcfdemo.war -m 1GB -n $HOST_NAME -i 1 -t 180 --no-start
-cf bind-service $APP_NAME myRabbit
-cf map-route $APP_NAME $DOMAIN -n map-dev
+
+echo_msg "Pushing new Microservice"
+cf push $APP_NAME -p $APP_PATH -m $MEMORY -n $HOST_NAME -i 1 -t 180 --no-start
+if [ ! -z "$SERVICE_NAME" ]
+  then
+    cf bind-service $APP_NAME $SERVICE_NAME 
+fi
+cf map-route $APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
+
+echo_msg "Starting New Microservice"
 cf start $APP_NAME
-cf lo
+cf logout
