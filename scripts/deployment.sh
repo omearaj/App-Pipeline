@@ -10,8 +10,8 @@ usage ()
 {
   echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
   echo '               -d <domain> -a <app_prefix> -v <build_version>'
-  echo '               -sn <serviceName> -m <memory> -p <path_to_app>'
-  echo ' e.g. ./deployment.sh -u suf -p ******** -o suf-org -s dev -d emea.fe.pivotal.io -a cities-ui -v 9 -e citiesService -m 512m -p artifacts/cities-ui.jar'
+  echo '               -sn <serviceName> -m <memory> -p <path_to_app> -i <instances>'
+  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -a cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
   exit
 }
 
@@ -54,6 +54,9 @@ case $1 in
                        ;;
         -p )           shift
                        APP_PATH=$1
+                       ;;
+        -i )           shift
+                       INSTANCES=$1
                        ;;
     esac
     shift
@@ -103,7 +106,8 @@ cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a https://api.$CF_
 ##   4. Log out
 ##
 
-DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | sed '2!d' | cut -d" " -f1)
+DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | tail -n 1 | cut -d" " -f1)
+#DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | sed '2!d' | cut -d" " -f1)
 if [ -n "$DEPLOYED_APP_NAME" ]; then
  echo_msg "Deleting previous microservice version: $DEPLOYED_APP_NAME"
  cf unmap-route $DEPLOYED_APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
@@ -118,6 +122,10 @@ if [ ! -z "$SERVICE_NAME" ]
 fi
 cf map-route $APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
 
-echo_msg "Starting New Microservice"
+echo_msg "Starting Container & Microservice"
 cf start $APP_NAME
+if [ ! -z "$INSTANCES" ]
+  then
+    cf scale $APP_NAME -i $INSTANCES
+fi
 cf logout
