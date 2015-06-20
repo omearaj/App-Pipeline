@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 set -e
 
 ## This script is used to test the BASH script commands
@@ -8,59 +8,14 @@ set -e
 
 usage ()
 {
-  echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
-  echo '               -d <domain> -ap <app_prefix> -v <build_version>'
-  echo '               -sn <serviceName> -m <memory> -p <path_to_app> -i <instances>'
+  echo 'Usage : Script <user> <password> <org> <space>'
+  echo '               <domain> <app_prefix> <build_version>'
+  echo '               <serviceName> <memory> <path_to_app> <instances>'
   echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -ap cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
   exit
 }
 
-if [ "$#" -eq 0 ]
-then
-  usage
-fi
-
-## Parameters used to test the BASH script
-## They will be provided by Jenkins plugins,
-## Jenkins environment variables or job parameters
-while [ "$1" != "" ]; do
-case $1 in
-        -u )           shift
-                       CF_USER=$1
-                       ;;
-        -pw )          shift
-                       CF_PASSWORD=$1
-                       ;;
-        -o )           shift
-                       CF_ORG=$1
-                       ;;
-        -s )           shift
-                       CF_SPACE=$1
-                       ;;
-        -d )           shift
-                       CF_DOMAIN=$1
-                       ;;
-        -ap )          shift
-                       APP_PREFIX=$1
-                       ;;
-        -v )           shift
-                       BUILD_VERSION=$1
-                       ;;
-        -sn )          shift
-                       SERVICE_NAME=$1
-                       ;;
-        -m )           shift
-                       MEMORY=$1
-                       ;;
-        -p )           shift
-                       APP_PATH=$1
-                       ;;
-        -i )           shift
-                       INSTANCES=$1
-                       ;;
-    esac
-    shift
-done
+echo $CF_USER $CF_PASSWORD
 
 if [ -z $APP_PATH ]
 then
