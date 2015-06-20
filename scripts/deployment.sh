@@ -9,9 +9,9 @@ set -e
 usage ()
 {
   echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
-  echo '               -d <domain> -a <app_prefix> -v <build_version>'
+  echo '               -d <domain> -ap <app_prefix> -v <build_version>'
   echo '               -sn <serviceName> -m <memory> -p <path_to_app> -i <instances>'
-  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -a cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
+  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -ap cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
   exit
 }
 
@@ -40,7 +40,7 @@ case $1 in
         -d )           shift
                        CF_DOMAIN=$1
                        ;;
-        -a )           shift
+        -ap )          shift
                        APP_PREFIX=$1
                        ;;
         -v )           shift

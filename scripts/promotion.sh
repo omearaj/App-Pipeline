@@ -9,9 +9,9 @@ set -e
 usage ()
 {
   echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
-  echo '               -d <domain> -a <app_prefix> -v <build_version>'
+  echo '               -d <domain> -ap <app_prefix> -v <build_version>'
   echo '               -sn <serviceName> -m <memory> -p <path_to_app> -i <instances>'
-  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -a cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
+  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -ap cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
   exit
 }
 
@@ -40,7 +40,7 @@ case $1 in
         -d )           shift
                        CF_DOMAIN=$1
                        ;;
-        -a )           shift
+        -ap )          shift
                        APP_PREFIX=$1
                        ;;
         -v )           shift
@@ -87,25 +87,6 @@ cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a https://api.$CF_
 
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-## These steps complete the following, they are the only required steps for the Jenkins Job
-##
-##   1. Determine the name of the deployed app. The naming convention for this
-##      app is map-build-BUILD_NUMBER, ex map-build-45. We assume only 1 previous build
-##      exist but this script can be modified to support multiple previous builds.
-##
-##   2. If an app is found by querying the list of deployed apps then unmap a
-##      convenient url, ex map-dev.cfapps.io, and delete the existing app. In this 
-##      situation we are ok with downtime as we deploy the new app in development.
-##   
-##   Note: route name must be unique in a foundation. If you use Pivotal Web Services
-##         you need to make sure your convenient URL is unique.
-##   
-##   3. Push the next released version, bind an existing Rabbit service to the app, map
-##      the convenient URL to the new instance and start the app.
-##
-##   4. Log out
-##
-
 echo_msg "Pushing new Microservice"
 cf push $APP_NAME -p $APP_PATH -m $MEMORY -n $HOST_NAME -i 1 -t 180 --no-start
 if [ ! -z "$SERVICE_NAME" ]
@@ -118,12 +99,12 @@ echo_msg "Starting Container & Microservice"
 cf start $APP_NAME
 
 echo_msg "Performing Blue Green Deployment"
-DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | tail -n 1 | cut -d" " -f1)
-#DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | sed '2!d' | cut -d" " -f1)
+DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | head -n 1 | cut -d" " -f1)
 if [ ! -z "$DEPLOYED_APP_NAME" -a "$DEPLOYED_APP_NAME" != " " -a "$DEPLOYED_APP_NAME" != "$APP_NAME" ]; then
   echo "Performing zero-downtime cutover to $BUILD_VERSION"
   cf scale "$DEPLOYED_APP_NAME" -i 1
-  read -p "Press [Enter] key to continue cutover..."
+  echo "Temp sleep in script for demo purposes only!!"
+  sleep 10
   cf unmap-route "$DEPLOYED_APP_NAME" $CF_DOMAIN -n $APP_PREFIX-$CF_USER
   cf delete "$DEPLOYED_APP_NAME" -f -r
 fi
