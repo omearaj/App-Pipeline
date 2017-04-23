@@ -1,58 +1,120 @@
-#! /bin/bash
+#!/bin/bash
+set -e
 
 ## This script is used to test the BASH script commands
 ## of a Jenkins Job using the Cloud Foundry CLI.
+## This script is based on previous version written by Matt Stine and Jamie O'Meara
+## Author - Sufyaan Kazi - Pivotal
+
+usage ()
+{
+  echo 'Usage : Script -u <user> -pw <password> -o <org> -s <space>'
+  echo '               -d <domain> -ap <app_prefix> -v <build_version>'
+  echo '               -sn <serviceName> -m <memory> -p <path_to_app> -i <instances>'
+  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -ap cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
+  exit
+}
+
+if [ "$#" -eq 0 ]
+then
+  usage
+fi
 
 ## Parameters used to test the BASH script
 ## They will be provided by Jenkins plugins,
 ## Jenkins environment variables or job parameters
-CF_USER=$1
-CF_PASSWORD=$2
-CF_ORG=$3
-CF_SPACE=$4
-API=$5
-DOMAIN=$6
-BUILD_VERSION=$7
+while [ "$1" != "" ]; do
+case $1 in
+        -u )           shift
+                       CF_USER=$1
+                       ;;
+        -pw )          shift
+                       CF_PASSWORD=$1
+                       ;;
+        -o )           shift
+                       CF_ORG=$1
+                       ;;
+        -s )           shift
+                       CF_SPACE=$1
+                       ;;
+        -d )           shift
+                       CF_DOMAIN=$1
+                       ;;
+        -ap )          shift
+                       APP_PREFIX=$1
+                       ;;
+        -v )           shift
+                       BUILD_VERSION=$1
+                       ;;
+        -sn )          shift
+                       SERVICE_NAME=$1
+                       ;;
+        -m )           shift
+                       MEMORY=$1
+                       ;;
+        -p )           shift
+                       APP_PATH=$1
+                       ;;
+        -i )           shift
+                       INSTANCES=$1
+                       ;;
+    esac
+    shift
+done
+
+if [ -z $APP_PATH ]
+then
+  echo "!!!!!! Please supply the path to the app to be deployed !!!!!!!!!!!!!!"
+  exit 1
+fi
+
+echo_msg () {
+  echo ""
+  echo ""
+  echo "************* ${1} *************"
+  echo ""
+
+  return 0
+}
 
 ## Variables used during Jenkins Build Process
-APP_NAME=map-build-$BUILD_VERSION
-#Host Name must be unique across foundation
-HOST_NAME=$APP_NAME-$CF_SPACE
+APP_NAME=$APP_PREFIX-$BUILD_VERSION
+HOST_NAME=$APP_PREFIX-$CF_USER-$BUILD_VERSION
 
-## Login to Cloud Foundry usually performed by Jenkins Plugin
-cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-validation
+## Log into PCF endpoint - Provided via Jenkins Plugin
+echo_msg "Logging into Cloud Foundry"
+## wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-linux-amd64.tgz
+## tar -zxvf cf-linux-amd64.tgz
+cf --version
+cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a https://api.$CF_DOMAIN --skip-ssl-validation
 
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-## These steps complete the following, they are the only required steps for the Jenkins Job
-##
-##   1. Determine the name of the deployed app. The naming convention for this
-##      app is map-build-BUILD_NUMBER, ex map-build-45. We assume only 1 previous build
-##      exist.
-##
-##   2. Push the promoted app to production and bind it to the required services, like Rabbit.
-##      Map the external route name, maps in this case, to the production app
-##
-##   3. Scale down the existing version, unmap the external route and delete it.
-##
-##   Note: Best practice is to keep the previous version in case of roll back.
-##
-##   4. Log out
-##
+echo_msg "Pushing new Microservice"
+cf push $APP_NAME -p $APP_PATH -m $MEMORY -n $HOST_NAME -i 1 -t 180 --no-start
+if [ ! -z "$SERVICE_NAME" ]
+  then
+    cf bind-service $APP_NAME $SERVICE_NAME 
+fi
+cf map-route $APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
 
-DEPLOYED_APP_NAME=$(cf apps | grep 'map-build-' | cut -d" " -f1)
-
-cf push $APP_NAME -n $HOST_NAME -m 1GB -p artifacts/pcfdemo.war -t 180 -i 2 --no-start
-cf bind-service $APP_NAME myRabbit
+echo_msg "Starting Container & Microservice"
 cf start $APP_NAME
-cf map-route $APP_NAME $DOMAIN -n maps
 
-#Perform Blue Green deployment
+echo_msg "Performing Blue Green Deployment"
+DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | head -n 1 | cut -d" " -f1)
 if [ ! -z "$DEPLOYED_APP_NAME" -a "$DEPLOYED_APP_NAME" != " " -a "$DEPLOYED_APP_NAME" != "$APP_NAME" ]; then
   echo "Performing zero-downtime cutover to $BUILD_VERSION"
   cf scale "$DEPLOYED_APP_NAME" -i 1
-  cf unmap-route "$DEPLOYED_APP_NAME" $DOMAIN -n maps
+  echo "Temp sleep in script for demo purposes only!!"
+  sleep 10
+  cf unmap-route "$DEPLOYED_APP_NAME" $CF_DOMAIN -n $APP_PREFIX-$CF_USER
   cf delete "$DEPLOYED_APP_NAME" -f -r
 fi
 
-cf lo
+echo_msg "Scaling new Version to $INSTANCES instances"
+if [ ! -z "$INSTANCES" ]
+  then
+    cf scale $APP_NAME -i $INSTANCES
+fi
+cf logout

@@ -1,25 +1,47 @@
-#! /bin/bash
+#!/bin/bash
+set -e
 
 ## This script is used to test the BASH script commands
 ## of a Jenkins Job using the Cloud Foundry CLI.
+## This script is based on previous version written by Matt Stine and Jamie O'Meara
+## Author - Sufyaan Kazi - Pivotal
 
-## Parameters used to test the BASH script
-## They will be provided by Jenkins plugins, 
-## Jenkins environment variables or job parameters
-CF_USER=$1
-CF_PASSWORD=$2
-CF_ORG=$3
-CF_SPACE=$4
-API=$5
-DOMAIN=$6
-BUILD_VERSION=$7
+usage ()
+{
+  echo 'Usage : Script <user> <password> <org> <space>'
+  echo '               <domain> <app_prefix> <build_version>'
+  echo '               <serviceName> <memory> <path_to_app> <instances>'
+  echo ' e.g. ./deployment.sh -u suf -pw ******** -o suf-org -s dev -d emea.fe.pivotal.io -ap cities-ui -sn citiesService -m 512m -p artifacts/cities-ui.jar i 1 -v 9'
+  exit
+}
+
+echo $CF_USER $CF_PASSWORD
+
+if [ -z $APP_PATH ]
+then
+  echo "!!!!!! Please supply the path to the app to be deployed !!!!!!!!!!!!!!"
+  exit 1
+fi
+
+echo_msg () {
+  echo ""
+  echo ""
+  echo "************* ${1} *************"
+  echo ""
+
+  return 0
+}
 
 ## Variables used during Jenkins Build Process
-APP_NAME=map-build-$BUILD_VERSION
-HOST_NAME=$APP_NAME-dev
+APP_NAME=$APP_PREFIX-$BUILD_VERSION
+HOST_NAME=$APP_PREFIX-$CF_USER-$BUILD_VERSION
 
 ## Log into PCF endpoint - Provided via Jenkins Plugin
-cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-validation
+echo_msg "Logging into Cloud Foundry"
+## wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-linux-amd64.tgz
+## tar -zxvf cf-linux-amd64.tgz
+cf --version
+cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a https://api.$CF_DOMAIN --skip-ssl-validation
 
 # ^^^^^^^^^^^^^^^^^^^^ Commands for Jenkins Script ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -42,13 +64,26 @@ cf login -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE -a $API --skip-ssl-
 ##   4. Log out
 ##
 
-DEPLOYED_APP_NAME=$(cf apps | grep 'map-build-' | cut -d" " -f1)
+DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | tail -n 1 | cut -d" " -f1)
+#DEPLOYED_APP_NAME=$(cf apps | grep $APP_PREFIX | sed '2!d' | cut -d" " -f1)
 if [ -n "$DEPLOYED_APP_NAME" ]; then
- cf unmap-route $DEPLOYED_APP_NAME $DOMAIN -n map-dev
+ echo_msg "Deleting previous microservice version: $DEPLOYED_APP_NAME"
+ cf unmap-route $DEPLOYED_APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
  cf delete $DEPLOYED_APP_NAME -r -f 
 fi
-cf push $APP_NAME -p artifacts/pcfdemo.war -m 1GB -n $HOST_NAME -i 1 -t 180 --no-start
-cf bind-service $APP_NAME myRabbit
-cf map-route $APP_NAME $DOMAIN -n map-dev
+
+echo_msg "Pushing new Microservice"
+cf push $APP_NAME -p $APP_PATH -m $MEMORY -n $HOST_NAME -i 1 -t 180 --no-start
+if [ ! -z "$SERVICE_NAME" ]
+  then
+    cf bind-service $APP_NAME $SERVICE_NAME 
+fi
+cf map-route $APP_NAME $CF_DOMAIN -n $APP_PREFIX-$CF_USER
+
+echo_msg "Starting Container & Microservice"
 cf start $APP_NAME
-cf lo
+if [ ! -z "$INSTANCES" ]
+  then
+    cf scale $APP_NAME -i $INSTANCES
+fi
+cf logout
